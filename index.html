@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="es"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Santo Grial · Unidades 1, 2 y 3</title>
+<style>
+:root{--bg:#f3f5f9;--card:#fff;--fg:#14213d;--mu:#5b6782;--ln:#d6dcea;--ac:#1f3b73;--as:#e3eaf7;--ok:#1e6b3a;--okb:#dff1e4;--bad:#a3271c;--badb:#fbe2df;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0e1424;--card:#161e33;--fg:#e8edf8;--mu:#9aa6c2;--ln:#2a3552;--ac:#9db8ef;--as:#1f2b48;--ok:#8fdba6;--okb:#14301f;--bad:#f2a49b;--badb:#3a1a17}}
+:root[data-theme="dark"]{--bg:#0e1424;--card:#161e33;--fg:#e8edf8;--mu:#9aa6c2;--ln:#2a3552;--ac:#9db8ef;--as:#1f2b48;--ok:#8fdba6;--okb:#14301f;--bad:#f2a49b;--badb:#3a1a17}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.55 system-ui,-apple-system,"Segoe UI",sans-serif}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--bg)}
+.wrap{max-width:720px;margin:0 auto;padding:20px 16px 48px}
+h1{font-size:1.5rem;margin:0 0 4px}header p{color:var(--mu);margin:0 0 12px}
+.bar{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--bg);padding:10px 0;display:grid;gap:8px;border-bottom:1px solid var(--ln);margin-bottom:16px}
+.r1{display:flex;gap:12px;align-items:center;flex-wrap:wrap}
+.st{font-variant-numeric:tabular-nums;font-weight:700}.st span{color:var(--mu);font-weight:400;font-size:.85rem;margin-right:4px}
+.tr{flex:1;min-width:100px;height:8px;border-radius:4px;background:var(--ln);overflow:hidden}.tr i{display:block;height:100%;width:0;background:var(--ac);transition:width .3s}
+button,select{font:inherit;color:var(--ac);background:transparent;border:1.5px solid var(--ac);border-radius:10px;padding:8px 12px;min-height:40px;cursor:pointer}
+select{color:var(--fg);background:var(--card)}button.p{background:var(--ac);color:var(--card);font-weight:700}
+.q{background:var(--card);border:1px solid var(--ln);border-radius:14px;padding:16px;margin-bottom:14px}
+.tag{display:inline-block;font-size:.76rem;text-transform:uppercase;background:var(--as);color:var(--ac);padding:2px 8px;border-radius:6px;font-weight:700}
+.num{color:var(--mu);font-size:.85rem;margin-right:6px}.qt{margin:10px 0 12px;font-size:1.05rem}
+.ops{display:grid;gap:8px}
+label.op{display:flex;gap:10px;align-items:center;padding:10px 12px;border:1.5px solid var(--ln);border-radius:10px;cursor:pointer;min-height:44px}
+label.op input{width:20px;height:20px;flex:none;accent-color:var(--ac)}
+label.op.ok{border-color:var(--ok);background:var(--okb);color:var(--ok)}label.op.bad{border-color:var(--bad);background:var(--badb);color:var(--bad)}
+.rb{display:flex;gap:10px;align-items:center;margin-top:12px}.er{color:var(--bad);font-size:.9rem}
+.fb{margin-top:12px;padding:12px;border-radius:10px;background:var(--as);font-size:.95rem}.fb b.o{color:var(--ok)}.fb b.b{color:var(--bad)}
+.sum{background:var(--card);border:2px solid var(--ac);border-radius:14px;padding:16px}.sum h2{margin:0 0 6px;font-size:1.25rem}
+</style></head><body><div class="wrap">
+<header><h1>Santo Grial · Unidades 1, 2 y 3</h1>
+<p>Cada ronda trae preguntas del pool de numeración, códigos, Boole, circuitos y memorias. Las que fallás vuelven antes; con 2 aciertos seguidos quedan dominadas.</p></header>
+<div class="bar">
+<div class="r1"><div class="st"><span>Ronda</span><b id="rnd">1</b></div><div class="st"><span>Respondidas</span><b id="dn"></b></div><div class="st"><span>Correctas</span><b id="gd">0</b></div><div class="tr"><i id="fl"></i></div></div>
+<div class="r1"><div class="st"><span>Pool visto</span><b id="sn"></b></div><div class="st"><span>Dominadas</span><b id="ms">0</b></div>
+<select id="u"><option value="0">Todas</option><option value="1">U1</option><option value="2">U2</option><option value="3">U3</option></select>
+<select id="n"><option value="10">10 por ronda</option><option value="15">15 por ronda</option><option value="25">25 por ronda</option></select>
+<button id="nx">Nueva ronda</button><button id="rs">Reiniciar</button></div></div>
+<main id="quiz"></main>
+<section class="sum" id="sum" hidden><h2 id="sT"></h2><p id="sP"></p><ul id="sL"></ul><button class="p" id="nx2">Empezar otra ronda</button></section>
+</div>
+<script>
+const Q=[];const A=(u,q,c,w,n)=>Q.push({u,q,c,w,n});
+// ---- U1
+A(1,"¿Qué convenio se usa para el exponente en punto flotante?","Complemento a dos con regla de signo invertida, o Exceso",["Valor absoluto y signo","Complemento a uno","BCD 8421"],"Convierte los exponentes en enteros positivos para comparar rápido.");
+A(1,"¿Qué convenio se usa para la mantisa en punto flotante?","Valor absoluto y signo",["Exceso","Complemento a dos","Complemento a uno"]);
+A(1,"El formato de punto flotante de simple precisión usa…","32 bits",["16 bits","24 bits","64 bits"],"1 bit de signo, 8 de exponente (sesgo 127) y 23 de mantisa.");
+A(1,"Un código BCD se forma con todas las combinaciones posibles de 4 bits.","Falso",["Verdadero"],"Usa solo 10 de las 16 combinaciones. Ojo: el Santo Grial tiene un parcial que lo marca Verdadero y otro Falso; la lógica de cátedra es Falso.");
+A(1,"Para el número 25,1 (base 10), comparando punto flotante y BCD 8421:","BCD tiene más precisión que punto flotante",["Punto flotante tiene más precisión que BCD","Ambos son exactos","Ninguno puede representarlo"],"El 0,1 no tiene representación binaria exacta; en BCD cada dígito decimal es exacto.");
+A(1,"El código de Hamming es…","Detector y corrector de errores",["Solo detector","Solo corrector","Ni detector ni corrector"]);
+A(1,"¿Cuántos bits de paridad necesita Hamming para detectar y corregir 1 error con datos de 8 bits?","4",["3","5","8"],"2^p ≥ n + p + 1 → 2^4 = 16 ≥ 8 + 4 + 1.");
+A(1,"Un código es cíclico si…","Es continuo y la última combinación es adyacente a la primera",["Cambia más de un bit entre combinaciones","Repite la primera combinación al final","Tiene distancia mínima 3"]);
+A(1,"La distancia mínima de un código es…","La menor distancia entre dos combinaciones cualesquiera",["La mayor distancia entre dos combinaciones","La cantidad de bits de la palabra","La cantidad de ceros de la primera combinación"]);
+A(1,"El bit de paridad se agrega a un código para…","Aumentar la distancia mínima y poder detectar errores",["Corregir errores de 1 bit","Disminuir la distancia mínima","Comprimir el código"],"Logra Dm = 2 y se genera con XOR (por ejemplo, XOR de 3 entradas para un código de 3 bits).");
+A(1,"Para corregir 1 error por bit, la distancia mínima del código debe ser…","Dm ≥ 3",["Dm = 1","Dm = 2","Dm ≥ 4 únicamente"],"Fórmula de cátedra: errores corregibles · 2 + 1 = Dm. Ojo: un parcial del Santo Grial menciona ≥ 2; para corregir se necesita 3.");
+A(1,"¿Cuántos símbolos binarios se necesitan para representar el decimal 1305?","11",["10","12","13"],"2^10 = 1024 < 1305 < 2048 = 2^11.");
+A(1,"El número hexadecimal 900000 es mayor que el decimal 999999.","Verdadero",["Falso"],"900000h = 9.437.184.");
+A(1,"Convertir 9520 (decimal) a octal: ¿cuáles son los cocientes y restos?","1190 r0 | 148 r6 | 18 r4 | 2 r2",["1190 r4 | 148 r2 | 18 r6 | 2 r0","1190 r0 | 148 r4 | 18 r6 | 2 r2","1190 r2 | 148 r0 | 18 r4 | 2 r6"],"Resultado: 22460 en octal.");
+A(1,"Códigos BCD exceso 6 de los dígitos 1 2 5 8:","0111 1000 1011 1110",["0001 0010 0101 1000","0100 0101 1000 1011","0111 1000 1100 1111"],"Se suma 6 a cada dígito: 7, 8, 11, 14.");
+A(1,"El mayor decimal positivo en complemento a dos con n bits es…","2^(n−1) − 1",["2^n − 1","2^(n−1)","2^n"]);
+A(1,"El complemento a dos en computación se usa para…","Representar números negativos",["Representar números fraccionarios","Detectar errores","Codificar caracteres"]);
+A(1,"¿Expresión del complemento a uno de un número fraccionario (n enteros, k fraccionarios)?","C1(N) = 2^n − 2^−k − N",["C1(N) = 2^n − N","C1(N) = 2^n + 2^−k − N","C1(N) = 2^(n−1) − N"]);
+A(1,"Al restar A−B con complemento a uno, si se produce acarreo…","Hay que sumarlo al resultado (acarreo circular)",["Se descarta","Indica overflow","Se resta del resultado"]);
+A(1,"El C1 es más eficiente que el C2 porque tiene un único cero.","Falso",["Verdadero"],"Es el C2 el que tiene único cero; el C1 tiene doble cero.");
+// ---- U2
+A(2,"El Álgebra de Boole es…","Un conjunto cerrado de elementos binarios relacionados por operaciones lógicas",["Un conjunto abierto de elementos decimales","Un sistema de numeración posicional","Un código detector de errores"]);
+A(2,"La operación de inversión o complementación se deduce de los postulados 2 y 3.","Falso",["Verdadero"],"Es un postulado propio, no una consecuencia de los otros.");
+A(2,"Un término es canónico si…","Posee todas las variables de la función (en producto o en suma)",["Tiene una sola variable","Es el término más simplificado","Solo contiene variables negadas"]);
+A(2,"Desde la tabla de verdad, la sumatoria canónica tiene…","Tantos términos como unos tenga la función",["Tantos términos como ceros tenga la función","Un término por variable","Siempre 2^n términos"]);
+A(2,"Los términos canónicos de celdas que limitan por los lados en un mapa de Karnaugh son…","Adyacentes",["Complementarios","Opuestos","Redundantes"]);
+A(2,"La cantidad de unos dentro de un grupo de Karnaugh siempre debe ser…","Una potencia de dos",["Un número par cualquiera","Un número primo","Múltiplo de tres"]);
+A(2,"La expresión de una función minimizada por Karnaugh…","Puede existir más de una",["Es siempre única","No puede tener solapamientos","Siempre usa maxterms"]);
+A(2,"Un decodificador de 16 salidas tiene…","4 variables de entrada",["3 variables de entrada","8 variables de entrada","16 variables de entrada"]);
+A(2,"¿Conviene usar decodificadores MSI para implementar funciones lógicas?","Sí, porque sus salidas son los minterms de la función",["No, porque sus salidas son maxterms","No, porque solo sirven para memorias","Sí, porque no necesitan compuertas OR"]);
+A(2,"¿Cuáles son sistemas combinacionales?","Multiplexor, decodificador y ALU",["Contador, registro y biestable","Multiplexor y contador","Biestable JK y decodificador"]);
+A(2,"El semisumador solo se usa con dos operandos de 1 bit.","Verdadero",["Falso"],"S = A ⊕ B, C = A · B.");
+A(2,"Para implementar una función lógica de 4 variables con multiplexor se usa uno de…","8 canales",["4 canales","3 canales","2 canales"],"Con n variables se usa un MUX de 2^(n−1) canales.");
+A(2,"En un sumador binario natural de 8 bits, el acarreo C8 depende de…","Los bits de los números que suma y del acarreo inicial C0",["Solo de los acarreos anteriores","Solo del bit más significativo","Del reloj del sistema"]);
+A(2,"¿El overflow debe tenerse en cuenta en los circuitos aritméticos?","Sí, porque la capacidad del circuito puede ser superada",["No, el hardware lo resuelve solo","No, solo ocurre en punto flotante","Solo en BCD"]);
+A(2,"El complemento a 10 permitiría construir…","Un restador BCD con un sumador BCD, complementando a 10 un operando",["Un sumador serie","Un decodificador BCD","Un detector de errores"]);
+A(2,"El principio de dualidad dice que…","Intercambiando + por · y 0 por 1 toda igualdad sigue siendo válida",["Toda función tiene dos expresiones canónicas","Toda variable tiene complemento","a + a = a"]);
+A(2,"Un sistema secuencial se define como…","Aquel cuyas salidas dependen de las entradas actuales y de cómo evolucionaron antes",["Aquel cuyas entradas cambian en orden preestablecido","Aquel cuyas salidas dependen solo de las entradas actuales","Aquel sin elementos de memoria"]);
+A(2,"Los sistemas secuenciales se caracterizan por tener un lazo de realimentación.","Verdadero",["Falso"]);
+A(2,"En el biestable J-K está prohibido que ambas entradas valgan 1.","Falso",["Verdadero"],"Con J=K=1 la salida conmuta (toggle). El prohibido es el SR con S=R=1.");
+A(2,"Un JK asíncrono no tiene aplicación práctica porque con J=K=1…","La salida fluctúa entre 1 y 0",["Queda en estado prohibido","Se borra la memoria","Se bloquea en 1"]);
+A(2,"Un biestable D se puede implementar con un SR haciendo…","S = R negado",["S = R","S = 0","R = 1"]);
+A(2,"Un biestable es asincrónico si…","Su tabla de verdad es válida permanentemente",["Cambia solo con el flanco del reloj","Tiene dos relojes","Cambia solo por nivel"]);
+A(2,"El contador síncrono tiene las entradas de reloj de todos sus biestables unidas a la entrada de sincronismo.","Verdadero",["Falso"]);
+A(2,"El biestable sincrónico por nivel se construye con dos biestables M-E concatenados.","Falso",["Verdadero"],"Esa estructura maestro-esclavo corresponde al biestable por flanco.");
+// ---- U3
+A(3,"¿Con qué elemento de memoria se asocia la DRAM?","Capacitor",["Biestable SR","Fusible","Capacitor de puerta flotante"]);
+A(3,"¿Con qué elemento se asocia la EPROM?","Capacitor de puerta flotante",["Fusible","Biestable SR","Diodo"]);
+A(3,"¿Con qué elemento se asocia la PROM?","Fusible",["Capacitor","Biestable SR","Conductor"]);
+A(3,"Cuando hablamos de COLA (Queue) nos referimos a…","Una memoria FIFO",["Una memoria LIFO","Una memoria asociativa","Una memoria ROM"]);
+A(3,"En una memoria LIFO…","No hay líneas de direccionamiento",["Hay una línea de dirección","Hay 8 líneas de dirección","Se accede por contenido"],"Funciona con un puntero de pila interno.");
+A(3,"El término RAM proviene de…","Random Access Memory",["Read Access Memory","Rapid Active Memory","Register Addressed Memory"]);
+A(3,"En una memoria RAM activa…","El tiempo de lectura es similar al de escritura",["La escritura es mucho más lenta","La lectura es mucho más lenta","Solo se puede leer"]);
+A(3,"Las memorias DRAM son más rápidas que las SRAM.","Falso",["Verdadero"],"La DRAM requiere refresco y es más lenta; la SRAM usa biestables.");
+A(3,"La memoria que necesita refresco es…","DRAM",["SRAM","ROM","EPROM"]);
+A(3,"La organización interna 2D de una memoria RAM usa…","Un decodificador",["Dos decodificadores","Ningún decodificador","Un multiplexor"],"La 3D usa dos (fila y columna).");
+A(3,"¿Qué ventaja tiene la organización 3D sobre la 2D?","La complejidad de los decodificadores es mucho menor, sobre todo en memorias de alta capacidad",["Es más rápida siempre","Usa menos bits por posición","No necesita bus de direcciones"]);
+A(3,"El tiempo de ciclo (tc) de una memoria RAM…","Es mayor que el tiempo de acceso (ta)",["Es menor que ta","Es igual a ta siempre","No depende de ta"]);
+A(3,"Una memoria EPROM puede regrabarse.","Verdadero",["Falso"],"Se borra con luz ultravioleta.");
+A(3,"Las memorias PROM son regrabables una gran cantidad de veces.","Falso",["Verdadero"],"Se graban una sola vez, quemando fusibles.");
+A(3,"¿Cuántos chips de 2 Kbits se necesitan para una SRAM de 16 KBytes?","64",["8","16","32"],"16 · 1024 · 8 / 2048 = 64.");
+A(3,"Una memoria RAM de 4 MBytes tiene…","22 líneas de direccionamiento",["16 líneas","20 líneas","24 líneas"],"4 MB = 2^22 posiciones de 1 byte.");
+A(3,"Capacidad en bits de una memoria con n2 líneas de dirección y n1 de datos:","2^n2 · n1",["2^n1 · n2","n2 · n1","2^(n1+n2)"],"Y la cantidad de posiciones es 2^n2.");
+A(3,"Una memoria pasiva ROM es…","Un caso particular de memoria RAM",["Una memoria serie","Una memoria asociativa","Una memoria FIFO"],"Ojo: la pregunta “¿ROM es de acceso aleatorio?” aparece con respuestas distintas en dos parciales del Santo Grial.");
+A(3,"Los registros de desplazamiento serie-serie pueden aplicarse para obtener…","Memorias serie",["Memorias asociativas","Memorias ROM","Decodificadores"]);
+A(3,"Se llama bus de direcciones al…","Conjunto de líneas usado para seleccionar una posición de memoria",["Conjunto de líneas que transporta los datos","Conjunto de líneas de control","Registro que guarda la instrucción"]);
+A(3,"La memoria asociativa (CAM) se usa como base de…","Las memorias caché",["La pila","Las ROM","Los registros de desplazamiento"]);
+
+const KEY="pool_u123_v2",$=id=>document.getElementById(id);
+let st={round:0,ids:[],ord:{},res:{},h:{},n:10,u:0};
+try{const s=JSON.parse(localStorage.getItem(KEY)||"null");if(s&&s.ids)st=s}catch(e){}
+const save=()=>{try{localStorage.setItem(KEY,JSON.stringify(st))}catch(e){}};
+const sh=a=>{a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a};
+const opts=i=>[Q[i].c,...Q[i].w];
+const prio=i=>{const h=st.h[i];if(!h)return 0;return h.last?2+h.s:1};
+function newRound(){st.u=+$("u").value;st.n=+$("n").value;
+let p=sh(Q.map((q,i)=>i).filter(i=>!st.u||Q[i].u===st.u));p.sort((a,b)=>prio(a)-prio(b));
+st.ids=sh(p.slice(0,st.n));st.ord={};st.ids.forEach(i=>st.ord[i]=sh(opts(i).map((_,j)=>j)));
+st.res={};st.round++;save();build();window.scrollTo(0,0)}
+function lock(i){const sel=st.res[i],ok=sel===0,q=Q[i];
+st.ord[i].forEach((j,k)=>{const l=$("o"+i+"_"+k);if(j===0)l.classList.add("ok");else if(j===sel)l.classList.add("bad")});
+$("c"+i).querySelectorAll("input").forEach(r=>{r.disabled=true;r.checked=st.ord[i][+r.value]===sel});$("b"+i).hidden=true;
+$("f"+i).innerHTML="<div class=\"fb\"><b class=\""+(ok?"o":"b")+"\">"+(ok?"Correcto":"Incorrecto")+"</b>"+(ok?"":" · Respuesta: <b>"+q.c+"</b>")+(q.n?"<br>"+q.n:"")+"</div>"}
+function stats(){const d=st.ids.filter(i=>i in st.res),g=d.filter(i=>st.res[i]===0),N=st.ids.length;
+$("rnd").textContent=st.round;$("dn").textContent=d.length+"/"+N;$("gd").textContent=g.length;$("fl").style.width=(N?d.length/N*100:0)+"%";
+const hk=Object.keys(st.h);$("sn").textContent=hk.length+"/"+Q.length;$("ms").textContent=hk.filter(k=>st.h[k].s>=2).length;
+const s=$("sum");if(N&&d.length===N){s.hidden=false;$("sT").textContent="Ronda "+st.round+": "+g.length+" de "+N+" ("+Math.round(g.length/N*100)+"%)";
+const bad=d.filter(i=>st.res[i]!==0);$("sP").textContent=bad.length?"Estas van a volver a aparecer:":"Ronda perfecta.";$("sL").innerHTML=bad.map(i=>"<li>"+Q[i].q+"</li>").join("")}else s.hidden=true}
+function build(){$("u").value=st.u;$("n").value=st.n;const box=$("quiz");box.innerHTML="";
+st.ids.forEach((i,n)=>{const q=Q[i],o=opts(i),d=document.createElement("article");d.className="q";d.id="c"+i;
+d.innerHTML="<span class=\"num\">"+String(n+1).padStart(2,"0")+"</span><span class=\"tag\">Unidad "+q.u+"</span><p class=\"qt\">"+q.q+"</p><div class=\"ops\">"+
+st.ord[i].map((j,k)=>"<label class=\"op\" id=\"o"+i+"_"+k+"\"><input type=\"radio\" name=\"q"+i+"\" value=\""+k+"\"><span><b>"+String.fromCharCode(97+k)+")</b> "+o[j]+"</span></label>").join("")+
+"</div><div class=\"rb\"><button class=\"p\" id=\"b"+i+"\">Comprobar</button><span class=\"er\" id=\"e"+i+"\"></span></div><div id=\"f"+i+"\"></div>";
+box.appendChild(d);
+d.querySelectorAll("input").forEach(r=>r.addEventListener("change",()=>{$("e"+i).textContent=""}));
+$("b"+i).onclick=()=>{const r=d.querySelector("input:checked");if(!r){$("e"+i).textContent="Elegí una opción primero";return}
+const sel=st.ord[i][+r.value],ok=sel===0,h=st.h[i]||{s:0,ok:0,bad:0};
+st.res[i]=sel;if(ok){h.ok++;h.s++}else{h.bad++;h.s=0}h.last=ok;st.h[i]=h;save();lock(i);stats()};
+if(i in st.res)lock(i)});stats()}
+$("nx").onclick=newRound;$("nx2").onclick=newRound;$("u").onchange=newRound;$("n").onchange=newRound;
+$("rs").onclick=()=>{if(confirm("¿Borrar todo el progreso?")){st.h={};st.ids=[];st.round=0;save();newRound()}};
+if(!st.ids.length||st.ids.some(i=>!Q[i]))newRound();else build();
+</script></body></html>
